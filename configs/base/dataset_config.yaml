@@ -1,0 +1,17 @@
+NAME : "test_dirty_dataset"
+
+################################### PATHS SETTINGS ###################################
+DATASET_PATH : "datasets/finetuning/municipio_partido_localidad.csv"
+OUTPUT_DIR : "outputs"
+
+################################### SENTENCE AUGMENTATION SETTINGS ###################################
+AUGMENTATION : True
+ABBREVIATIONS_PATH : "datasets/finetuning/palabras_abreviaciones.json"
+AUGMENTATION_KEYBOARD_MISTAKE_PROBABILITY:  0.2
+AUGMENTATION_ABBREVIATIONS_PROBABILITY:  0.5
+AUG_WORD_MAX : 1
+AUG_CHAR_MAX : 1 
+
+################################### LOGGING SETTINGS ###################################
+SAVE_LOGS: False
+LOGS_FILE_PATH: "logs/base_maestro_sample.log"

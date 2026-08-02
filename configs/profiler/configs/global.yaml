@@ -1,0 +1,11 @@
+# Maestro
+MAESTRO_PATH: "datasets/maestros/base.txt"
+MAESTRO_CPA_COLUMN: "CPA"
+
+# Logo
+LOGO_PATH: "logo/logo_ubidata.png"
+
+# Batch
+BATCH_TXT_QUERY_COLUMNS_STRUCT: [['Provincia'], ['Departamento'], ['Localidad'], ['Municipio'], ['Calle', 'Altura']]
+BATCH_TXT_QUERY_COLUMNS_UNSTRUCT: [['Provincia', 'Departamento', 'Localidad', 'Municipio', 'Calle', 'Altura']]
+BATCH_TXT_ID_COLUMN: ['ID']

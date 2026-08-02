@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "startb-buscador-direcciones"
+version = "0.2.0"
+description = "Address searcher using semantic embeddings"
+readme = "README.md"
+requires-python = ">=3.10.12"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
+
+dependencies = [
+    "numpy==2.2.6",
+    "pandas==2.3.2",
+    "pyyaml",
+    "sentence-transformers==5.1.0",
+    "torch==2.8.0",
+    "scikit-learn",
+    "colorlog",
+    "matplotlib",
+    "streamlit==1.49.1",
+    "streamlit-keyup==0.3.0",
+    "openpyxl",
+    "datasets",
+    "nlpaug",
+    "accelerate"
+]
+
+[project.optional-dependencies]
+dev = [
+    "jupyter",
+    "matplotlib",
+    "seaborn",
+    "plotly",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+py-modules = ["utils"]
+
+[tool.setuptools.packages.find]
+where = ["src"]

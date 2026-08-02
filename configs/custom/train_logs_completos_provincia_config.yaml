@@ -1,0 +1,67 @@
+NAME : "logs_completos-provincia"
+
+################################### MODEL ###################################
+BASE_MODEL_PATH : "models/base_models/paraphrase-MiniLM-L6-v2"
+
+################################### DATASET ###################################
+DATASET_PATH : "datasets/logs/logs_completo.txt"
+DELIMITER : "\t"
+ANCHOR_COL : ['s_province']
+POSITIVE_COLS : {
+  "positive": ['r_province']
+}
+NEGATIVE_COLS : {
+
+}
+NOTNULL_COLS : ['s_province', 'r_province']
+################################### OUTPUT ###################################
+OUTPUT_DIR : "models/training/provincia"
+
+################################### HYPERPARAMETER SETTINGS ###################################
+BATCH_SIZE : 8
+EPOCHS : 9999
+LR:  2e-5
+
+################################### CHECKPOINTS SETTINGS ###################################
+CHECKPOINT_SAVE_STEPS : 40
+CHECKPOINT_SAVE_TOTAL_LIMIT : 5
+
+################################### LOSS SETTINGS ###################################
+LOSS : "mnr"  # {mnr, triplet}
+
+################################### SENTENCE AUGMENTATION SETTINGS ###################################
+AUGMENTATION : True
+
+#Keyboard Mistake Augmentation Settings
+AUGMENTATION_KEYBOARD_MISTAKE_PROBABILITY:  0.4
+KEYBOARD_MAX_CHARS_TO_CHANGE : 1 
+KEYBOARD_MAX_WORDS_TO_CHANGE : 1
+
+#Abbreviations Augmentation Settings
+ABBREVIATIONS_PATH : "datasets/finetuning/palabras_abreviaciones.json"
+AUGMENTATION_ABBREVIATIONS_PROBABILITY:  0.4
+
+#Masking Augmentation Settings
+AUGMENTATION_MASKING_PROBABILITY: 0
+MASKING_MAX_WORDS_TO_DELETE : 1
+MASKING_MIN_WORDS_TO_OPERATE : 3
+MASKING_COLUMNS : {
+ "positive": {
+      "min_notna_cols_to_operate": 2, 
+      "max_cols_to_delete": 1, 
+      "not_mask_columns": ["r_street"], 
+      "mask_type": "columns"
+  }
+}
+
+#Shuffle Augmentation Settings
+AUGMENTATION_SHUFFLE_PROBABILITY: 0
+SHUFFLE_COLUMNS : ["positive"]  
+
+################################### VERBOSE SETTINGS ###################################
+SHOW_PROGRESS_BAR : True
+SHOW_LOSS : True
+
+################################### LOGGING SETTINGS ###################################
+SAVE_LOGS: False
+LOGS_FILE_PATH: "logs/base_maestro_sample.log"

@@ -1,0 +1,8 @@
+# Logo
+LOGO_PATH: "logo/logo_ubidata.png"
+MAESTRO_CPA_COLUMN: "CPA"
+
+# Batch
+BATCH_TXT_QUERY_COLUMNS_STRUCT: [['Provincia'], ['Departamento', 'Localidad', 'Municipio'], ['Calle', 'Altura']]
+BATCH_TXT_QUERY_COLUMNS_UNSTRUCT: [['Provincia', 'Departamento', 'Localidad', 'Municipio', 'Calle', 'Altura']]
+BATCH_TXT_ID_COLUMN: ['ID']

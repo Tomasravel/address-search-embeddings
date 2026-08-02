@@ -1,0 +1,74 @@
+NAME : "logs_completos-unestructured"
+
+################################### MODEL ###################################
+BASE_MODEL_PATH : "models/base_models/paraphrase-MiniLM-L6-v2"
+
+################################### DATASET ###################################
+DATASET_PATH : "datasets/logs/logs_completo.txt"
+DELIMITER : "\t"
+ANCHOR_COL : ['s_province','s_district','s_city','s_neighbourhood','s_street']
+POSITIVE_COLS : {
+  "positive1": ['r_province','r_district','r_city', 'r_neighbourhood','r_street'],
+  "positive2": ['r_province','r_district','r_city', 'r_neighbourhood','r_streetshortname']
+}
+NEGATIVE_COLS : {
+
+}
+NOTNULL_COLS : ['s_street', 'r_street', 'r_streetshortname']
+################################### OUTPUT ###################################
+OUTPUT_DIR : "models/training/unestructured"
+
+################################### HYPERPARAMETER SETTINGS ###################################
+BATCH_SIZE : 16
+EPOCHS : 9999
+LR:  2e-5
+
+################################### CHECKPOINTS SETTINGS ###################################
+CHECKPOINT_SAVE_STEPS : 400
+CHECKPOINT_SAVE_TOTAL_LIMIT : 5
+
+################################### LOSS SETTINGS ###################################
+LOSS : "mnr"  # {mnr, triplet}
+
+################################### SENTENCE AUGMENTATION SETTINGS ###################################
+AUGMENTATION : True
+
+#Keyboard Mistake Augmentation Settings
+AUGMENTATION_KEYBOARD_MISTAKE_PROBABILITY:  0.2
+KEYBOARD_MAX_CHARS_TO_CHANGE : 1 
+KEYBOARD_MAX_WORDS_TO_CHANGE : 1
+
+#Abbreviations Augmentation Settings
+ABBREVIATIONS_PATH : "datasets/finetuning/palabras_abreviaciones.json"
+AUGMENTATION_ABBREVIATIONS_PROBABILITY:  0.4
+
+#Masking Augmentation Settings
+AUGMENTATION_MASKING_PROBABILITY: 0.3
+MASKING_MAX_WORDS_TO_DELETE : 1
+MASKING_MIN_WORDS_TO_OPERATE : 3
+MASKING_COLUMNS : {
+ "positive1": {
+      "min_notna_cols_to_operate": 2, 
+      "max_cols_to_delete": 1, 
+      "not_mask_columns": ["r_street"], 
+      "mask_type": "columns"
+  },
+  "positive2": {
+        "min_notna_cols_to_operate": 2,
+        "max_cols_to_delete": 1,
+        "not_mask_columns": ["r_streetshortname"],
+        "mask_type": "columns"
+   } # "mask_type": {words, columns}
+}
+
+#Shuffle Augmentation Settings
+AUGMENTATION_SHUFFLE_PROBABILITY: 0.2
+SHUFFLE_COLUMNS : ["positive1", "positive2"]  
+
+################################### VERBOSE SETTINGS ###################################
+SHOW_PROGRESS_BAR : True
+SHOW_LOSS : True
+
+################################### LOGGING SETTINGS ###################################
+SAVE_LOGS: False
+LOGS_FILE_PATH: "logs/base_maestro_sample.log"

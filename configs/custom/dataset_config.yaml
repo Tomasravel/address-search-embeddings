@@ -1,0 +1,26 @@
+NAME : "test_dirty_logs"
+
+################################### DATASET ###################################
+DATASET_PATH : "datasets/logs/logs.txt"
+DELIMITER : "\t"
+ANCHOR_COL : {"columns": ['r_district', 'r_city', 'r_neighbourhood']}
+POSITIVE_COLS : {
+  "positive": {"columns": ['s_district','s_city'], "mask_probs":[0.1, 0.1, 0.1]}
+}
+NEGATIVE_COLS : {}
+NOTNULL_COLS : ['s_district','s_city']
+
+################################### OUTPUT ###################################
+OUTPUT_DIR : "outputs"
+
+################################### SENTENCE AUGMENTATION SETTINGS ###################################
+AUGMENTATION : True
+ABBREVIATIONS_PATH : "datasets/finetuning/palabras_abreviaciones.json"
+AUGMENTATION_KEYBOARD_MISTAKE_PROBABILITY:  0.2
+AUGMENTATION_ABBREVIATIONS_PROBABILITY:  0.5
+AUG_WORD_MAX : 1
+AUG_CHAR_MAX : 1 
+
+################################### LOGGING SETTINGS ###################################
+SAVE_LOGS: False
+LOGS_FILE_PATH: "logs/base_maestro_sample.log"

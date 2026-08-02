@@ -1,0 +1,79 @@
+# Searcher
+COLUMNS_TO_RETURN: ['CPA', 'PROVINCIA', 'PARTIDO', 'LOCALIDAD', 'localidad_original', 'MUNICIPIO', 'NOM_CALLE_ABR', 'LATITUD', 'LONGITUD', 'HEIGHT', 'COD_DESDE', 'COD_HASTA'] 
+STREET_CPA_COLUMN: "NOM_CALLE_ABR"
+
+# Structured address searcher
+SEARCHER_CONFIG: [
+  {
+    "MODEL_PATH": "models/prod/structured/provincia/provincia-abreviaciones_20250701_164948_checkpoint-12260", 
+    "QUERY_COLUMNS": ['PROVINCIA'],
+    "ID_COLUMNS": ['Provincia'],
+    "MAX_ADDRESSES_TO_SHOW": 1,
+    "MAX_ADDRESSES_TO_OPERATE": 1,
+    "THRESHOLD_ABS": 0.3,
+    "THRESHOLD_REL": 0.05,
+    "HAS_HEIGHT": False,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/provincia_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/provincia_embedded.npy"
+  },
+  {
+    "MODEL_PATH": "models/prod/structured/municipio_partido_localidad/logs_completos-municipio_partido_localidad_20250614_071606_checkpoint-38800",
+    "QUERY_COLUMNS": ['PARTIDO', 'LOCALIDAD', 'MUNICIPIO'],
+    "ID_COLUMNS": ['Departamento', 'Localidad', 'Municipio'],
+    "MAX_ADDRESSES_TO_SHOW": 1,
+    "MAX_ADDRESSES_TO_OPERATE": 1,
+    "THRESHOLD_ABS": 0.3,
+    "THRESHOLD_REL": 0.05,
+    "HAS_HEIGHT": False,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/municipio_partido_localidad_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/municipio_partido_localidad_embedded.npy"
+  },
+  {
+    "MODEL_PATH": "models/prod/unstructured/embeddings_model_1",
+    "QUERY_COLUMNS": ['NOM_CALLE_ABR'],
+    "ID_COLUMNS": ['Calle'],
+    "MAX_ADDRESSES_TO_SHOW": 5,
+    "MAX_ADDRESSES_TO_OPERATE": 25,
+    "THRESHOLD_ABS": 0.3,
+    "THRESHOLD_REL": 0.05,
+    "HAS_HEIGHT": True,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/street_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/street_embedded.npy"
+  }
+]
+
+COLUMN_NAMES_MAPPING: {
+  "Provincia": "PROVINCIA",
+  "Departamento": "PARTIDO",
+  "Localidad": "LOCALIDAD",
+  "Municipio": "MUNICIPIO",
+  "Calle": "NOM_CALLE_COMPLETO",
+  "Altura": "HEIGHT",
+}
+
+RESULT_SIMILARITY_LEVELS: [1,2]
+
+# Maestro settings
+MAESTRO_PROCESSED_PATH: "datasets/maestros/maestro_struct_processed.csv"
+UNIQUE_QUERIES_GROUPS_PATH: datasets/maestros/struct_unique_queries_groups.parquet
+SAVE_UNIQUE_QUERIES_GROUPS: True
+
+# Embeddings settings
+EMBEDDINGS_BATCH_SIZE: 512
+SAVE_EMBEDDINGS: True
+LOAD_EMBEDDINGS: False
+
+STORE_EMBEDDINGS_MATRIX: True
+EMBEDDINGS_MATRIX_PATH: datasets/maestros/struct_maestro_embeddings_matrix.npy
+
+# GPU settings
+USE_GPU: False
+
+# Logging settings
+SAVE_LOGS: False
+LOGS_FILE_PATH: "logs/base_maestro_sample.log"
+
+# Localidades linderas
+APPLY_LOCALIDADES_LINDERAS: True
+LOCALIDADES_LINDERAS_PATH: "datasets/localidades_linderas/Loc_Linderas_depurado_cant_lineas.xlsx"
+LOCALIDADES_COUMNS: ['LOCALIDAD_1','LOCALIDAD_']

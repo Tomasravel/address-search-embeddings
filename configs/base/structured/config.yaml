@@ -1,0 +1,127 @@
+# Searcher
+COLUMNS_TO_RETURN: ['CPA', 'PROVINCIA', 'PARTIDO', 'LOCALIDAD', 'localidad_original', 'MUNICIPIO', 'NOM_CALLE_ABR_C', 'LATITUD', 'LONGITUD', 'HEIGHT', 'COD_DESDE', 'COD_HASTA'] 
+MAX_ADDRESSES_TO_SHOW: 5
+MAX_ADDRESSES_TO_OPERATE: 25
+
+SIN_CALLE_THRESHOLD: 0.95
+
+# Structured address searcher
+SEARCHER_CONFIG: [
+  {
+    "MODEL_PATH": "models/prod/provincia/provincia-abreviaciones_20250701_164948_checkpoint-12260", 
+    "QUERY_COLUMNS": ['PROVINCIA'],
+    "ID_COLUMNS": ['PROVINCIA'],
+    "MAX_ADDRESSES_TO_SHOW": 1,
+    "MAX_ADDRESSES_TO_OPERATE": 1,
+    "THRESHOLD_ABS": 0,
+    "THRESHOLD_REL": 0,
+    "HAS_HEIGHT": False,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/provincia_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/provincia_embedded.npy"
+  },
+  {
+    "MODEL_PATH": "models/prod/municipio_partido_localidad/logs_completos-municipio_partido_localidad_20250614_071606_checkpoint-38800",
+    "QUERY_COLUMNS": ['PARTIDO', 'LOCALIDAD', 'MUNICIPIO'],
+    "ID_COLUMNS": ['PROVINCIA', 'PARTIDO', 'LOCALIDAD', 'localidad_original', 'BAR_NOMBRE', 'MUNICIPIO'],
+    "ID_COLUMNS_ORI": ['PROVINCIA', 'PARTIDO', 'localidad_original', 'BAR_NOMBRE', 'MUNICIPIO'],
+    "MAX_ADDRESSES_TO_SHOW": 100,
+    "MAX_ADDRESSES_TO_OPERATE": 100,
+    "THRESHOLD_ABS": 0,
+    "THRESHOLD_REL": 0,
+    "HAS_HEIGHT": False,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/municipio_partido_localidad_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/municipio_partido_localidad_embedded.npy"
+  },
+  {
+    "MODEL_PATH": "models/prod/street/logs_completos-street_20250620_110757_checkpoint-3300",
+    "QUERY_COLUMNS": ['NOM_CALLE_COMPLETO'],
+    "ID_COLUMNS": ['PROVINCIA', 'PARTIDO', 'LOCALIDAD', 'localidad_original', 'BAR_NOMBRE', 'MUNICIPIO', 'NOM_CALLE', 'TIPO_CALLE', 'NOM_CALLE_COMPLETO'],
+    "ID_COLUMNS_ORI": ['PROVINCIA', 'PARTIDO', 'localidad_original', 'BAR_NOMBRE', 'MUNICIPIO', 'NOM_CALLE', 'TIPO_CALLE'],
+    "MAX_ADDRESSES_TO_SHOW": 5,
+    "MAX_ADDRESSES_TO_OPERATE": 25,
+    "THRESHOLD_ABS": 0,
+    "THRESHOLD_ABS_RELAXED": 0,
+    "THRESHOLD_REL": 0,
+    "HAS_HEIGHT": True,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/street_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/street_embedded.npy"
+  }
+]
+
+SEARCHER_CONFIG_SOLO_LOCALIDAD: [
+  {
+    "MODEL_PATH": "models/prod/provincia/provincia-abreviaciones_20250701_164948_checkpoint-12260", 
+    "QUERY_COLUMNS": ['PROVINCIA'],
+    "ID_COLUMNS": ['PROVINCIA'],
+    "MAX_ADDRESSES_TO_SHOW": 1,
+    "MAX_ADDRESSES_TO_OPERATE": 1,
+    "THRESHOLD_ABS": 0,
+    "THRESHOLD_REL": 0,
+    "HAS_HEIGHT": False,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/solo-localidad-provincia_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/solo-localidad-provincia_embedded.npy"
+  },
+  {
+    "MODEL_PATH": "models/prod/municipio_partido_localidad/logs_completos-municipio_partido_localidad_20250614_071606_checkpoint-38800",
+    "QUERY_COLUMNS": ['LOCALIDAD'],
+    "ID_COLUMNS": ['PROVINCIA', 'PARTIDO', 'LOCALIDAD', 'localidad_original', 'BAR_NOMBRE', 'MUNICIPIO'],
+    "ID_COLUMNS_ORI": ['PROVINCIA', 'PARTIDO', 'localidad_original', 'BAR_NOMBRE', 'MUNICIPIO'],
+    "MAX_ADDRESSES_TO_SHOW": 100,
+    "MAX_ADDRESSES_TO_OPERATE": 100,
+    "THRESHOLD_ABS": 0,
+    "THRESHOLD_REL": 0,
+    "HAS_HEIGHT": False,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/solo-localidad-municipio_partido_localidad_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/solo-localidad-municipio_partido_localidad_embedded.npy"
+  },
+  {
+    "MODEL_PATH": "models/prod/street/logs_completos-street_20250620_110757_checkpoint-3300",
+    "QUERY_COLUMNS": ['NOM_CALLE_COMPLETO'],
+    "ID_COLUMNS": ['PROVINCIA', 'PARTIDO', 'LOCALIDAD', 'localidad_original', 'BAR_NOMBRE', 'MUNICIPIO', 'NOM_CALLE', 'TIPO_CALLE', 'NOM_CALLE_COMPLETO'],
+    "ID_COLUMNS_ORI": ['PROVINCIA', 'PARTIDO', 'localidad_original', 'BAR_NOMBRE', 'MUNICIPIO', 'NOM_CALLE', 'TIPO_CALLE'],
+    "MAX_ADDRESSES_TO_SHOW": 5,
+    "MAX_ADDRESSES_TO_OPERATE": 25,
+    "THRESHOLD_ABS": 0,
+    "THRESHOLD_ABS_RELAXED": 0,
+    "THRESHOLD_REL": 0,
+    "HAS_HEIGHT": True,
+    "SAVE_EMBEDDINGS_PATH": "embeddings/solo-localidad-street_embedded.npy",
+    "LOAD_EMBEDDINGS_PATH": "embeddings/solo-localidad-street_embedded.npy"
+  }
+]
+
+SOLO_LOCALIDAD_THRESHOLD_ABS: 0.92
+
+BATCH_MAX_ADDRESSES_TO_SHOW: 1 # En el ultimo nivel es necesario mostrar mas de una para detectar ambiguedad, por eso agregmoas uno final
+
+RESULT_SIMILARITY_LEVELS: [1,2]
+AMBIGUOUS_THRESHOLD: 0.08
+
+# Maestro settings
+SAVE_MAESTRO_PATH: datasets/maestros/maestro_struct_processed.csv
+MAESTRO_PROCESSED_PATH: datasets/maestros/maestro_struct_processed.csv
+SIN_CALLE_PROCESSED_PATH: datasets/maestros/maestro_sin_calle.csv
+
+# Embeddings settings
+EMBEDDINGS_BATCH_SIZE: 32
+SAVE_EMBEDDINGS: True
+LOAD_EMBEDDINGS: False
+
+STORE_EMBEDDINGS_MATRIX: True
+EMBEDDINGS_MATRIX_PATH: datasets/maestros/struct_maestro_embeddings_matrix.npy
+SOLO_LOCALIDAD_EMBEDDINGS_MATRIX_PATH: datasets/maestros/solo-localidad-embeddings-struct_maestro_embeddings_matrix.npy
+# GPU settings
+USE_GPU: False
+
+# Logging settings
+SAVE_LOGS: False
+LOGS_FILE_PATH: "logs/base_maestro_sample.log"
+
+# Localidades linderas
+APPLY_LOCALIDADES_LINDERAS: True
+LOCALIDADES_LINDERAS_PATH: "datasets/localidades_linderas/Loc_Linderas_depurado_cant_lineas.xlsx"
+
+# Prefijo to PXL (codigo 4)
+LOAD_PREFIJO_TO_PXL_MAP: True
+PREFIJO_TO_PXL_MAP_PATH: datasets/prefijo_cp/prefijo_cp.json
+PXL_SET_PATH: datasets/prefijo_cp/pxl_set.json
