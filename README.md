@@ -26,12 +26,12 @@ The pipeline matches at several **field granularities** with models specialized 
 (province, locality/partido/municipio, street), each searched against the corresponding part
 of the master database with its own similarity thresholds:
 
-```
-free-form query
-   → preprocess / tokenize
-   → embed (fine-tuned sentence-transformer, per field level)
-   → nearest-neighbor vs. the embedded master DB (with abs/rel thresholds)
-   → canonical record (normalized fields + coordinates)
+```mermaid
+flowchart LR
+    A[User types<br/>a free-form address] --> B[Fine-tuned model<br/>turns it into an embedding]
+    B --> C[Compare against the<br/>embedded master database]
+    C --> D[Retrieve the most<br/>similar addresses]
+    D --> E[Return ranked<br/>candidate matches]
 ```
 
 Both a **structured** flow (fields provided separately) and an **unstructured** flow (one
