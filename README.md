@@ -53,6 +53,10 @@ real address and perturb specific fields, so the model learns what a valid match
 Errors are weighted differently depending on which field is changed, which is what encodes
 "how wrong" a given perturbation is.
 
+## Results
+
+On the validation set, the fine-tuned embedding model reached a **false-positive rate of ~0.3%**, very few queries were confidently matched to the wrong canonical address. In practice this makes the search markedly more flexible and human than the previous rule-based matching (tolerant of typos, abbreviations, and partial or reordered input) while keeping wrong matches rare. Ubidata is now very close to taking it to production.
+
 ## Repository layout
 
 ```
